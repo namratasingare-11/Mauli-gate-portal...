@@ -10,12 +10,9 @@ export const Signup: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [error, setError] = useState('');
-  const [currentLogo, setCurrentLogo] = useState('');
+  // Synchronous initialization for immediate render
+  const [currentLogo, setCurrentLogo] = useState(() => storageService.getAppLogo());
 
-  useEffect(() => {
-    setCurrentLogo(storageService.getAppLogo());
-  }, []);
-  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');

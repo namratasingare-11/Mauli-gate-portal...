@@ -8,12 +8,9 @@ import { Mail, ArrowLeft } from 'lucide-react';
 export const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [currentLogo, setCurrentLogo] = useState('');
+  // Synchronous initialization for immediate render
+  const [currentLogo, setCurrentLogo] = useState(() => storageService.getAppLogo());
 
-  useEffect(() => {
-    setCurrentLogo(storageService.getAppLogo());
-  }, []);
-  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Mock functionality

@@ -17,8 +17,8 @@ export const Profile: React.FC = () => {
     bio: ''
   });
   
-  // Logo Management State
-  const [appLogo, setAppLogo] = useState('');
+  // Logo Management State - Synchronous init
+  const [appLogo, setAppLogo] = useState(() => storageService.getAppLogo());
   const [newLogoUrl, setNewLogoUrl] = useState('');
 
   useEffect(() => {
@@ -32,7 +32,6 @@ export const Profile: React.FC = () => {
         bio: currentUser.bio || ''
       });
     }
-    setAppLogo(storageService.getAppLogo());
   }, []);
 
   const handleSave = () => {

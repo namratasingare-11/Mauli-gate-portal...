@@ -9,11 +9,12 @@ export const Login: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: '', password: '', rememberMe: true });
   const [error, setError] = useState('');
-  const [currentLogo, setCurrentLogo] = useState('');
+  // Synchronous initialization for immediate render
+  const [currentLogo, setCurrentLogo] = useState(() => storageService.getAppLogo());
   
   useEffect(() => {
     storageService.init();
-    setCurrentLogo(storageService.getAppLogo());
+    // Logo is already set via synchronous init, no need to set again
     const user = storageService.getCurrentUser();
     if (user) {
       navigate('/');

@@ -31,7 +31,8 @@ const NAV_ITEMS = [
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-  const [currentLogo, setCurrentLogo] = useState('');
+  // Synchronous initialization for immediate render
+  const [currentLogo, setCurrentLogo] = useState(() => storageService.getAppLogo());
   const navigate = useNavigate();
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -42,9 +43,6 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   };
 
   useEffect(() => {
-    // Initial Load
-    setCurrentLogo(storageService.getAppLogo());
-
     // Listen for logo changes
     const handleLogoChange = () => {
       setCurrentLogo(storageService.getAppLogo());
