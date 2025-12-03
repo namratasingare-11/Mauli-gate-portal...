@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Card, Button, Badge } from '../components/Common';
+import { Card, Button, Badge, Link } from '../components/Common';
 import { storageService } from '../services/storageService';
 import { ExamResult, UserStats, Announcement, Role, Question, TodoItem } from '../types';
 import { Trophy, Clock, Target, Calendar, Megaphone, Bell, Plus, ShieldCheck, X, Lightbulb, Award, CheckSquare, Trash2, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const StatBox: React.FC<{ title: string; value: string; icon: any; color: string; subtext?: string }> = ({ title, value, icon: Icon, color, subtext }) => (
   <div className="relative group">

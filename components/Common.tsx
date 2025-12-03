@@ -1,6 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { LucideIcon, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+
+// --- Router Shim (Replaces react-router-dom) ---
+const RouterContext = createContext<{ path: string; navigate: (p: string) => void }>({ path: '/', navigate: () => {} });
+
+export const HashRouter: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [path, setPath] = useState(window.location.hash.slice(1) || '/');
+  useEffect(() => {
+    const handler = () => setPath(window.location.hash.slice(1) || '/');
+    window.addEventListener('hashchange', handler);
+    return () => window.removeEventListener('hashchange', handler);
+  }, []);
+  const navigate = (newPath: string) => { window.location.hash = newPath; };
+  return <RouterContext.Provider value={{ path, navigate }}>{children}</RouterContext.Provider>;
+};
+
+export const Routes: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { path } = useContext(RouterContext);
+  const routes = React.Children.toArray(children);
+  for (const child of routes) {
+    if (React.isValidElement(child)) {
+      const childPath = child.props.path;
+      if (childPath === path || childPath === '*') return child;
+    }
+  }
+  return null;
+};
+
+export const Route: React.FC<{ path: string; element: React.ReactNode }> = ({ element }) => <>{element}</>;
+
+export const useNavigate = () => {
+  const { navigate } = useContext(RouterContext);
+  return (to: string | number) => {
+    if (typeof to === 'number') window.history.go(to);
+    else navigate(to);
+  };
+};
+
+export const useLocation = () => {
+  const { path } = useContext(RouterContext);
+  return { pathname: path, search: '', hash: window.location.hash, state: null, key: 'default' };
+};
+
+export const Navigate: React.FC<{ to: string; replace?: boolean; state?: any }> = ({ to }) => {
+  const { navigate } = useContext(RouterContext);
+  useEffect(() => { navigate(to); }, [to, navigate]);
+  return null;
+};
+
+export const Link: React.FC<{ to: string; children: React.ReactNode; className?: string }> = ({ to, children, className }) => {
+  const { navigate } = useContext(RouterContext);
+  return <a href={`#${to}`} onClick={(e) => { e.preventDefault(); navigate(to); }} className={className}>{children}</a>;
+};
+
+export const NavLink: React.FC<{ to: string; children: React.ReactNode | ((props: { isActive: boolean }) => React.ReactNode); className?: string | ((props: { isActive: boolean }) => string); onClick?: () => void }> = ({ to, children, className, onClick }) => {
+  const { path, navigate } = useContext(RouterContext);
+  const isActive = path === to;
+  const resolvedClassName = typeof className === 'function' ? className({ isActive }) : className;
+  const resolvedChildren = typeof children === 'function' ? children({ isActive }) : children;
+  return (
+    <a href={`#${to}`} onClick={(e) => { e.preventDefault(); navigate(to); if (onClick) onClick(); }} className={resolvedClassName}>
+      {resolvedChildren}
+    </a>
+  );
+};
 
 // --- Card ---
 export const Card: React.FC<{ children: React.ReactNode; className?: string; onClick?: () => void; id?: string }> = ({ children, className = '', onClick, id }) => (

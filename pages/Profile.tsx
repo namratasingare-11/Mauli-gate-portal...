@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '../components/Common';
 import { Card, Button, Badge } from '../components/Common';
 import { storageService } from '../services/storageService';
 import { User, Subject, Role } from '../types';

@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../components/Common';
 import { Card, Button } from '../components/Common';
 import { storageService } from '../services/storageService';
 import { Mail, ArrowLeft } from 'lucide-react';

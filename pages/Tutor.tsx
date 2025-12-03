@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from '../components/Common';
 
 // AI Tutor feature has been removed.
 // Redirecting to dashboard if accessed directly.
