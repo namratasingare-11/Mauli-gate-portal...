@@ -20,7 +20,7 @@ export const Routes: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const routes = React.Children.toArray(children);
   for (const child of routes) {
     if (React.isValidElement(child)) {
-      const childPath = child.props.path;
+      const childPath = (child.props as any).path;
       if (childPath === path || childPath === '*') return child;
     }
   }
