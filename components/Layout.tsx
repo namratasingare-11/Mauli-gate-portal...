@@ -13,7 +13,8 @@ import {
   Users,
   Phone,
   Mail,
-  MapPin
+  MapPin,
+  CalendarDays
 } from 'lucide-react';
 import { storageService } from '../services/storageService';
 import { Role } from '../types';
@@ -25,6 +26,7 @@ const NAV_ITEMS = [
   { path: '/syllabus', label: 'Syllabus Tracker', icon: BookOpen },
   { path: '/materials', label: 'Digital Library', icon: Library },
   { path: '/exam', label: 'Mock Exams', icon: PenTool },
+  { path: '/updates', label: 'GATE Info', icon: CalendarDays },
 ];
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {

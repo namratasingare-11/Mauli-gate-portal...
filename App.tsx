@@ -5,6 +5,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Syllabus } from './pages/Syllabus';
 import { Exam } from './pages/Exam';
 import { StudyMaterial } from './pages/StudyMaterial';
+import { GateUpdates } from './pages/GateUpdates';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { ForgotPassword } from './pages/ForgotPassword';
@@ -59,6 +60,13 @@ const App: React.FC = () => {
           <ProtectedRoute>
             <Layout>
               <Exam />
+            </Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/updates" element={
+          <ProtectedRoute>
+            <Layout>
+              <GateUpdates />
             </Layout>
           </ProtectedRoute>
         } />
